@@ -6,12 +6,13 @@ import io.appium.java_client.android.AndroidDriver;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
-import java.util.Arrays;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 public class CalcGoogleTest {
 
@@ -45,18 +46,84 @@ public class CalcGoogleTest {
 
     @Test
     public void sampleTest() {
-        var el1 = driver.findElement(AppiumBy.accessibilityId("2"));
-        el1.click();
-        var el2 = driver.findElement(AppiumBy.accessibilityId("0"));
-        el2.click();
-        var el3 = driver.findElement(AppiumBy.accessibilityId("multiply"));
-        el3.click();
-        var el4 = driver.findElement(AppiumBy.accessibilityId("1"));
-        el4.click();
-        var el5 = driver.findElement(AppiumBy.accessibilityId("0"));
-        el5.click();
-        var el6 = driver.findElement(AppiumBy.accessibilityId("equals"));
-        el6.click();
+
+        //Operação: 20 x 10 = 200
+
+        var algarismo2 = driver.findElement(AppiumBy.accessibilityId("2"));
+        algarismo2.click();
+
+        var algarismo0 = driver.findElement(AppiumBy.accessibilityId("0"));
+        algarismo0.click();
+
+        var funcaoMultiplicar = driver.findElement(AppiumBy.accessibilityId("multiply"));
+        funcaoMultiplicar.click();
+
+        var algarismo1 = driver.findElement(AppiumBy.accessibilityId("1"));
+        algarismo1.click();
+
+        algarismo0.click();
+
+        var funcaoResultado = driver.findElement(AppiumBy.accessibilityId("equals"));
+        funcaoResultado.click();
+
+        //Validação
+        var infoResultado = driver.findElement(AppiumBy.id("com.google.android.calculator:id/result_final"));
+        assertEquals("200", infoResultado.getText());
+
+        //Limpar
+        var funcaoClear = driver.findElement(AppiumBy.accessibilityId("clear"));
+        funcaoClear.click();
+
+        //Operação: 108 x 349 = 37.692
+
+        algarismo1.click();
+
+        algarismo0.click();
+
+        var algarismo8 = driver.findElement(AppiumBy.accessibilityId("8"));
+        algarismo8.click();
+
+        funcaoMultiplicar.click();
+
+        var algarismo3 = driver.findElement(AppiumBy.accessibilityId("3"));
+        algarismo3.click();
+
+        var algarismo4 = driver.findElement(AppiumBy.accessibilityId("4"));
+        algarismo4.click();
+
+        var algarismo9 = driver.findElement(AppiumBy.accessibilityId("9"));
+        algarismo9.click();
+
+        funcaoResultado.click();
+
+        //Validação
+        assertEquals("37692", infoResultado.getText());
+
+        funcaoClear.click();
+
+        //Operação: 50 ^ 27 = 7.45058059692E45
+
+        var algarismo5 = driver.findElement(AppiumBy.accessibilityId("5"));
+        algarismo5.click();
+
+        algarismo0.click();
+
+        var funcaoPotencia = driver.findElement(AppiumBy.accessibilityId("power"));
+        funcaoPotencia.click();
+
+        algarismo2.click();
+
+        var algarismo7 = driver.findElement(AppiumBy.accessibilityId("7"));
+        algarismo7.click();
+
+        funcaoResultado.click();
+
+        assertEquals("7.45058059692E45", infoResultado.getText());
+
+
+
+
+
     }
 }
 
