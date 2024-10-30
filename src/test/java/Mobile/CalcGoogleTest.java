@@ -45,7 +45,7 @@ public class CalcGoogleTest {
     }
 
     @Test
-    public void sampleTest() {
+    public void calcTest() {
 
         //Operação: 20 x 10 = 200
 
@@ -118,11 +118,8 @@ public class CalcGoogleTest {
 
         funcaoResultado.click();
 
+        //Validação
         assertEquals("7.45058059692E45", infoResultado.getText());
-
-
-
-
 
     }
 }
