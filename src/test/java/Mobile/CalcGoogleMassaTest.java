@@ -5,6 +5,7 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.options.BaseOptions;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
@@ -52,20 +53,48 @@ public class CalcGoogleMassaTest {
             // ... código para configurar o driver do Appium
 
             // Encontrar os elementos usando os IDs diretamente
-            WebElement elementoNumero1 = driver.findElement(AppiumBy.accessibilityId(String.valueOf(numero1)));
-            WebElement elementoNumero2 = driver.findElement(AppiumBy.accessibilityId(String.valueOf(numero2)));
+
             WebElement botaoMultiplicar = driver.findElement(AppiumBy.accessibilityId("multiply"));
             WebElement botaoResultado = driver.findElement(AppiumBy.accessibilityId("equals"));
-            WebElement elementoResultado = driver.findElement(AppiumBy.id("com.google.android.calculator:id/result_final"));
-            assertEquals(resultadoEsperado, elementoResultado.getText());
+            WebElement resultadoPreview = driver.findElement(AppiumBy.id("com.google.android.calculator:id/result_preview"));
+           // WebElement elementoResultado = driver.findElement(AppiumBy.id("com.google.android.calculator:id/result_final"));
+//            var infoResultado = driver.findElement(AppiumBy.id("com.google.android.calculator:id/result_final"));
             WebElement botaoClear = driver.findElement(AppiumBy.accessibilityId("clear"));
 
+
+        for (char digit : numero1.toCharArray()) {
+            WebElement elementoNumero = driver.findElement(AppiumBy.accessibilityId(String.valueOf(digit)));
+            elementoNumero.click();
+        }
+
+        botaoMultiplicar.click();
+
+        for (char digit : numero2.toCharArray()) {
+            WebElement elementoNumero = driver.findElement(AppiumBy.accessibilityId(String.valueOf(digit)));
+            elementoNumero.click();
+        }
+
+        wait.until(ExpectedConditions.elementToBeClickable(resultadoPreview));
+
+        botaoResultado.click();
+
+        //wait.until(ExpectedConditions.visibilityOf(elementoResultado));
+
+        // Validate result using assertEquals
+//        assertEquals(resultadoEsperado, elementoResultado.getText());
+
+        WebElement elementoResultado = driver.findElement(AppiumBy.id("com.google.android.calculator:id/result_final"));
+        assertEquals(resultadoEsperado, elementoResultado.getText());
+
+        botaoClear.click();
+
             //Adicionar os cliques:
-            elementoNumero1.click();
-            elementoNumero2.click();
-            botaoMultiplicar.click();
-            botaoResultado.click();
-            botaoClear.click();
+//            elementoNumero1.click();
+//            botaoMultiplicar.click();
+//            elementoNumero2.click();
+//            botaoResultado.click();
+//            assertEquals(resultadoEsperado, elementoResultado.getText());
+//            botaoClear.click();
 
 
         }
