@@ -47,7 +47,7 @@ public class CalcGoogleTest {
     @Test
     public void calcTest() {
 
-        //Operação: 20 x 10 = 200
+    //Operação: 20 x 10 = 200
 
         var algarismo2 = driver.findElement(AppiumBy.accessibilityId("2"));
         algarismo2.click();
@@ -74,7 +74,8 @@ public class CalcGoogleTest {
         var funcaoClear = driver.findElement(AppiumBy.accessibilityId("clear"));
         funcaoClear.click();
 
-        //Operação: 108 x 349 = 37.692
+
+    //Operação: 108 x 349 = 37.692
 
         algarismo1.click();
 
@@ -101,7 +102,8 @@ public class CalcGoogleTest {
 
         funcaoClear.click();
 
-        //Operação: 50 ^ 27 = 7.45058059692E45
+
+    //Operação: 50 ^ 27 = 7.45058059692E45
 
         var algarismo5 = driver.findElement(AppiumBy.accessibilityId("5"));
         algarismo5.click();
@@ -121,6 +123,28 @@ public class CalcGoogleTest {
         //Validação
         assertEquals("7.45058059692E45", infoResultado.getText());
 
+        funcaoClear.click();
+
+
+    //Operação: 63 ^ 12 = 3.90918832847E21
+
+        var algarismo6 = driver.findElement(AppiumBy.accessibilityId("6"));
+        algarismo6.click();
+
+        algarismo3.click();
+
+        funcaoPotencia.click();
+
+        algarismo1.click();
+
+        algarismo2.click();
+
+        funcaoResultado.click();
+
+        //Validação
+        assertEquals("3.90918832847E21", infoResultado.getText());
+
+        funcaoClear.click();
     }
 }
 

@@ -3,12 +3,13 @@ package Mobile;
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.options.BaseOptions;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvFileSource;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -17,7 +18,7 @@ import java.time.Duration;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-public class CalcGoogleMassaTest {
+public class CalcGoogleExponenMassaTest {
 
     private AndroidDriver driver;
     public WebDriverWait wait;
@@ -48,54 +49,44 @@ public class CalcGoogleMassaTest {
     }
 
     @ParameterizedTest
-    @CsvFileSource(files = "src/test/resources/dados_teste_calculadora.csv", numLinesToSkip = 1)
-        void testeMultiplicacao(String numero1, String numero2, String resultadoEsperado) throws Exception {
-            // ... código para configurar o driver do Appium
+    @CsvFileSource(files = "src/test/resources/massaExpo.csv", numLinesToSkip = 1)
+        void testeExponenciacaoMassa(String numero1, String numero2, String resultadoEsperado) throws Exception {
 
-            // Encontrar os elementos usando os IDs diretamente
+        // Elementos para autmação
 
-            WebElement botaoMultiplicar = driver.findElement(AppiumBy.accessibilityId("multiply"));
-            WebElement botaoResultado = driver.findElement(AppiumBy.accessibilityId("equals"));
-            WebElement resultadoPreview = driver.findElement(AppiumBy.id("com.google.android.calculator:id/result_preview"));
-           // WebElement elementoResultado = driver.findElement(AppiumBy.id("com.google.android.calculator:id/result_final"));
-//            var infoResultado = driver.findElement(AppiumBy.id("com.google.android.calculator:id/result_final"));
-            WebElement botaoClear = driver.findElement(AppiumBy.accessibilityId("clear"));
+        WebElement botaoPotencia = driver.findElement(AppiumBy.accessibilityId("power"));
+        WebElement botaoResultado = driver.findElement(AppiumBy.accessibilityId("equals"));
+        WebElement resultadoPreview = driver.findElement(AppiumBy.id("com.google.android.calculator:id/result_preview"));
+        WebElement botaoClear = driver.findElement(AppiumBy.accessibilityId("clear"));
 
+    // Sequência de ações
 
+        //Digitar algarismo
         for (char digit : numero1.toCharArray()) {
             WebElement elementoNumero = driver.findElement(AppiumBy.accessibilityId(String.valueOf(digit)));
             elementoNumero.click();
         }
 
-        botaoMultiplicar.click();
+        botaoPotencia.click();
 
+        //Digitar algarismo
         for (char digit : numero2.toCharArray()) {
             WebElement elementoNumero = driver.findElement(AppiumBy.accessibilityId(String.valueOf(digit)));
             elementoNumero.click();
         }
 
+        //Esperar pelo resultado
         wait.until(ExpectedConditions.elementToBeClickable(resultadoPreview));
 
         botaoResultado.click();
 
-        //wait.until(ExpectedConditions.visibilityOf(elementoResultado));
-
-        // Validate result using assertEquals
-//        assertEquals(resultadoEsperado, elementoResultado.getText());
-
+        //Validar resultado
         WebElement elementoResultado = driver.findElement(AppiumBy.id("com.google.android.calculator:id/result_final"));
         assertEquals(resultadoEsperado, elementoResultado.getText());
+        System.out.println("A operação de " + numero1 + " x " + numero2 + " é " + elementoResultado.getText());
 
+        //Limpar calculadora
         botaoClear.click();
-
-            //Adicionar os cliques:
-//            elementoNumero1.click();
-//            botaoMultiplicar.click();
-//            elementoNumero2.click();
-//            botaoResultado.click();
-//            assertEquals(resultadoEsperado, elementoResultado.getText());
-//            botaoClear.click();
-
 
         }
 }
